@@ -65,4 +65,5 @@ def main():
     dados_pokemon = pegar_dados_pokemon(pokemon)
     mostrar_dados_pokemon(dados_pokemon)
 
-main()
+if __name__ == "__main__":
+    main()
