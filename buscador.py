@@ -22,6 +22,11 @@ TIPOS_PT = {
     "fairy": "Fada",
 }
 
+GERACOES = [
+    {"nome": "1ª Geração", "limite":151},
+    {"nome": "2ª Geração", "limite":251}
+]
+
 def pegar_dados_pokemon(nome_ou_id):
     # url para o endpoint da PokeAPI
     url = f"https://pokeapi.co/api/v2/pokemon/{str(nome_ou_id).lower()}"
@@ -45,6 +50,11 @@ def pegar_dados_pokemon(nome_ou_id):
     else:
         return f"Erro: Não foi possível encontrar o pokemon de nome/id: '{nome_ou_id}' (Status: {response.status_code})"
 
+def encontrar_geracao(id):
+    for geracao in GERACOES:
+        if id <= geracao["limite"]:
+            return geracao["nome"]
+
 def mostrar_dados_pokemon(pokemon):
     if isinstance(pokemon, dict):
         print(f"Número da dex: {pokemon["id"]}")
@@ -54,6 +64,7 @@ def mostrar_dados_pokemon(pokemon):
 
         tipos_pt = [TIPOS_PT.get(t, t) for t in pokemon["tipos"]]
         print(f"Tipo(s): {', '.join(tipos_pt)}")
+        print(f"Geração: {encontrar_geracao(pokemon["id"])}")
     else:
         print(pokemon) # imprime erro, caso ocorra
 
