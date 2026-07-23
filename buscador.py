@@ -23,9 +23,17 @@ TIPOS_PT = {
 }
 
 GERACOES = [
-    {"nome": "1ª Geração", "limite":151},
-    {"nome": "2ª Geração", "limite":251}
+    {"numero": 1, "inicio": 1, "fim": 151, "total": 151},
+    {"numero": 2, "inicio": 152, "fim": 251, "total": 100},
+    {"numero": 3, "inicio": 252, "fim": 386, "total": 135},
+    {"numero": 4, "inicio": 387, "fim": 493, "total": 107},
+    {"numero": 5, "inicio": 494, "fim": 649, "total": 156},
+    {"numero": 6, "inicio": 650, "fim": 721, "total": 72},
+    {"numero": 7, "inicio": 722, "fim": 809, "total": 88},
+    {"numero": 8, "inicio": 810, "fim": 905, "total": 96},
+    {"numero": 9, "inicio": 906, "fim": 1025, "total": 120}
 ]
+
 
 def pegar_dados_pokemon(nome_ou_id):
     # url para o endpoint da PokeAPI
@@ -44,7 +52,8 @@ def pegar_dados_pokemon(nome_ou_id):
             "altura": dados["height"],
             "peso": dados["weight"],
             "tipos": [t["type"]["name"] for t in dados["types"]],
-            "sprite": dados["sprites"]["front_default"]
+            "sprite": dados["sprites"]["front_default"],
+            "geracao": encontrar_geracao(dados["id"])
         }
         return informacoes_pokemon
     else:
@@ -52,8 +61,8 @@ def pegar_dados_pokemon(nome_ou_id):
 
 def encontrar_geracao(id):
     for geracao in GERACOES:
-        if id <= geracao["limite"]:
-            return geracao["nome"]
+        if id >= geracao["inicio"] and id <= geracao["fim"]:
+            return geracao["numero"]
 
 def mostrar_dados_pokemon(pokemon):
     if isinstance(pokemon, dict):
@@ -64,7 +73,7 @@ def mostrar_dados_pokemon(pokemon):
 
         tipos_pt = [TIPOS_PT.get(t, t) for t in pokemon["tipos"]]
         print(f"Tipo(s): {', '.join(tipos_pt)}")
-        print(f"Geração: {encontrar_geracao(pokemon["id"])}")
+        print(f"Geração: {pokemon["geracao"]}")
     else:
         print(pokemon) # imprime erro, caso ocorra
 

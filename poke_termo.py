@@ -1,4 +1,4 @@
-from buscador import pegar_dados_pokemon, TIPOS_PT
+from buscador import pegar_dados_pokemon, encontrar_geracao, TIPOS_PT, GERACOES
 import random
 import os
 
@@ -60,7 +60,8 @@ def comparar_pokemon(pokemon_escolhido, pokemon_aleatorio):
         "altura": obter_seta(pokemon_escolhido["altura"], pokemon_aleatorio["altura"]),
         "peso": obter_seta(pokemon_escolhido["peso"], pokemon_aleatorio["peso"]),
         "tipo1": comparar_tipo(pokemon_escolhido["tipos"], pokemon_aleatorio["tipos"], 0),
-        "tipo2": comparar_tipo(pokemon_escolhido["tipos"], pokemon_aleatorio["tipos"], 1)
+        "tipo2": comparar_tipo(pokemon_escolhido["tipos"], pokemon_aleatorio["tipos"], 1),
+        "geracao": obter_seta(pokemon_escolhido["geracao"], pokemon_aleatorio["geracao"])
     }
     return comparacoes
 
@@ -76,8 +77,8 @@ def abrir_pokedex():
     c = input("Pressione enter para voltar tecla...")
 
 def mostrar_tabela(lista_pokemon, lista_comparacoes):
-    print("―" * 77)
-    cabecalho = f"| {'Nº':<6} | {'Nome':<16} | {'Altura':<7} | {'Peso':<9} | {'Tipo 1':<10} | {'Tipo 2':<10} |"
+    print("―" * 87)
+    cabecalho = f"| {'Nº':<6} | {'Nome':<16} | {'Altura':<7} | {'Peso':<9} | {'Tipo 1':<10} | {'Tipo 2':<10} | {'Geração':<6} |"
     print(cabecalho)
     print("―" * len(cabecalho))
 
@@ -90,6 +91,7 @@ def mostrar_tabela(lista_pokemon, lista_comparacoes):
             nome = pokemon["nome"]
             altura = pokemon["altura"]/10
             peso = pokemon["peso"]/10
+            geracao = pokemon["geracao"]
             tipos_pt = [TIPOS_PT.get(t, t) for t in pokemon["tipos"]]
  
             tipo1 = tipos_pt[0]
@@ -97,14 +99,23 @@ def mostrar_tabela(lista_pokemon, lista_comparacoes):
 
             if len(tipos_pt) > 1: tipo2 = tipos_pt[1]
 
-            comp_id = comparacoes["id"]
-            comp_altura = comparacoes["altura"]
-            comp_peso = comparacoes["peso"]
-            comp_nome = comparacoes["nome"]
-            comp_tipo1 = comparacoes["tipo1"]
-            comp_tipo2 = comparacoes["tipo2"]
+            c_id = comparacoes["id"]
+            c_altura = comparacoes["altura"]
+            c_peso = comparacoes["peso"]
+            c_nome = comparacoes["nome"]
+            c_tipo1 = comparacoes["tipo1"]
+            c_tipo2 = comparacoes["tipo2"]
+            c_geracao = comparacoes["geracao"]
 
-            print(f"| {id:<4} {comp_id} | {nome:<14} {comp_nome} | {altura:<4}m {comp_altura} | {peso:<5}kg {comp_peso} | {tipo1:<8} {comp_tipo1} | {tipo2:<8} {comp_tipo2} |")
+            print(
+                f"| {id:<4} {c_id} "
+                f"| {nome:<14} {c_nome} "
+                f"| {altura:<4}m {c_altura} "
+                f"| {peso:<5}kg {c_peso} "
+                f"| {tipo1:<8} {c_tipo1} "
+                f"| {tipo2:<8} {c_tipo2} "
+                f"| {geracao:<5} {c_geracao} |"
+            )
 
     print()
    
