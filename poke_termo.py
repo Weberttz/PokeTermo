@@ -120,8 +120,7 @@ def mostrar_tabela(lista_pokemon, lista_comparacoes):
     print()
    
 def gerenciar_palpites(jogo, pokemon_aleatorio, lista_escolhidos, lista_comparacoes):
-    fim = False
-    acertou = False
+    acertou = jogo["acertou_pokemon"]
 
     limpar_tela()
     mostrar_banner()
@@ -130,7 +129,7 @@ def gerenciar_palpites(jogo, pokemon_aleatorio, lista_escolhidos, lista_comparac
 
     pokemon_escolhido = ""
 
-    while not fim:
+    while not acertou:
         pokemon_escolhido = fazer_palpite()
 
         if not isinstance(pokemon_escolhido, dict): 
@@ -145,7 +144,7 @@ def gerenciar_palpites(jogo, pokemon_aleatorio, lista_escolhidos, lista_comparac
 
         if pokemon_aleatorio["id"] == pokemon_escolhido["id"]: 
             acertou = True
-            fim = True
+            jogo["acertou_pokemon"] = True
 
         comparacoes = comparar_pokemon(pokemon_escolhido, pokemon_aleatorio)
 
@@ -167,7 +166,7 @@ def gerenciar_palpites(jogo, pokemon_aleatorio, lista_escolhidos, lista_comparac
 
 def main():
     fim = False
-    jogo = {"contador_palpites":0}
+    jogo = {"contador_palpites":0, "acertou_pokemon": False}
     lista_escolhidos = []
     lista_comparacoes = []
     pokemon_aleatorio = escolher_pokemon_aleatorio()
